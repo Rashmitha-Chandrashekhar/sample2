@@ -1,0 +1,42 @@
+const express = require('express');
+const app = express();
+const dairy=[
+    {id:1,name:'rashmitha',age:23,phone:9191919191,adress:'newyork'},
+    {id:2,name:'jayamma',age:50,phone:8181818181,adress:'paris'},
+    {id:3,name:'amrutha',age:30,phone:7171717171,adress:'bangalore'},
+    {id:4,name:'ranjith',age:29,phone:6161616161,adress:'kanakanagar'},
+    {id:5,name:'shekhar',age:60,phone:5151515151,adress:'uk'},
+    {id:6,name:'keerthan',age:24,phone:4141414141,adress:'mattikeri'},
+]
+app.use(function(req,res,next){
+    console.log("welcome to student dairy",Date())
+    next()
+})
+app.get('/dairy',(req,res)=>
+{      
+      
+      res.json(dairy)  
+})
+app.post('/dairy',(req,res)=>{
+    var obj={
+        "ip":req.ip,
+        "protocol":req.protocol,
+        "method":req.method
+
+    }
+    res.send(obj)
+})
+app.get('/dairy/:id',(req,res)=>
+{
+      const resourceparameter=dairy.find(c=>c.id==parseInt(req.params.id))
+      res.send(resourceparameter)
+})
+
+app.get('/dairy1',(req,res)=>
+{
+      const queryparameter=dairy.find(d=>d.name==(req.query.name))
+      res.status(400).send(queryparameter)
+})
+app.listen(3000,()=>{
+    console.log("server started");
+})
